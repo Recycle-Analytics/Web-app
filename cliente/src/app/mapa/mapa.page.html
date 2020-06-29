@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar id="toolbar" color="secondarysuccess">
+    <ion-title>Mapa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+		<ion-item>
+			<ion-grid>
+				<ion-row class="header-row">
+					<ion-col size="5"> Tipo </ion-col>
+					<ion-col size="5"> ID</ion-col>
+					<ion-col size="2" id="buscar"> Buscar</ion-col>
+				</ion-row>
+			<form [formGroup]="consulta" (ngSubmit)="consultar()">
+				<ion-row >
+					<ion-col size="5">
+						<ion-select class="inputs" required formControlName="tipo" interface="popover" (ionChange)="consultarIds($event)">
+							<ion-select-option *ngFor="let opcion of optionsTipo" [value]="opcion.nombre"> {{ opcion.titulo }}</ion-select-option>
+						</ion-select>
+
+						<div *ngFor="let error of errorMessages.tipo">
+							<ng-container *ngIf="tipo.hasError(error.type) && (tipo.dirty || tipo.touched)">
+								<small class="error-mensaje" >{{ error.message }}</small>
+							</ng-container>
+						</div>
+					</ion-col>
+					<ion-col size="5">
+						<ion-select [disabled]="!tipoEscogido" class="inputs" required formControlName="id" [value]="identificadores[0].IdEntidad">
+							<ion-select-option *ngFor="let Id of identificadores" [value]="Id.IdEntidad">
+								{{ Id.IdEntidad }}
+							</ion-select-option>
+						</ion-select>
+						<div *ngFor="let error of errorMessages.id">
+							<ng-container *ngIf="id.hasError(error.type) && (id.dirty || id.touched)">
+								<small class="error-mensaje">{{ error.message }}</small>
+							</ng-container>
+						</div>
+					</ion-col>
+					<ion-col size="2">
+						<ion-button color="primary" type="submit" [disabled]="!consulta.valid" ><ion-icon name="search-outline"></ion-icon></ion-button>
+					</ion-col>
+				</ion-row>
+			</form>
+			</ion-grid>
+		</ion-item>
+	</ion-list>
+
+	<ion-grid>
+		<ion-row id="rowMap">
+			<ion-col size="4">
+				<ion-list id="lista-info">
+					<ion-content has-subheader="false">
+					<ion-list-header color="success" id="header-list">
+						<p>Informacion<p>
+					</ion-list-header>
+					<div *ngFor="let info of informacion | keyvalue">
+						<ion-item-divider class="labels" color="secondarysuccess">
+							<ion-label>{{ info.key }}</ion-label>
+						</ion-item-divider>
+						<ion-item class="dato"> {{ info.value }}</ion-item>
+					</div>
+					<ion-infinite-scroll threshold="100px" id="infiniteScroll" (ionInfinite)="loadOlder($event)">
+				    <ion-infinite-scroll-content loadingSpinner="none" loadingText="">
+				    </ion-infinite-scroll-content>
+					</ion-infinite-scroll>
+					</ion-content>
+				</ion-list>
+			</ion-col>
+			<ion-col size="8">
+				<iframe [src]="mapa" id="mapas" frameborder="0" style="border:2px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

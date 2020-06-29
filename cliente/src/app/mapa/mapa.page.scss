@@ -1,0 +1,53 @@
+#mapas{
+	width:600px;
+	height: 450px;
+}
+
+#toolbar{
+	padding-top: 55px;
+	text-align: center;
+}
+
+.ion-color-secondarysuccess {
+  --ion-color-base: #d1ffdb;
+  --ion-color-base-rgb: 209,255,219;
+  --ion-color-contrast: #2dd36f;
+  --ion-color-contrast-rgb: 45, 211, 111;
+  --ion-color-shade: #b8e0c1;
+  --ion-color-tint: #d6ffdf;
+}
+
+#header-list{
+	font-weight: bold;
+	p{
+		text-align: center;
+		align-items: center;
+	}
+}
+
+.header-row{
+	font-size: small;
+	font-weight: bold;
+	align-items: center;
+	border-bottom: 1px solid gray; 
+}
+
+#lista-info{
+	border: 2px solid gray;
+	border-radius: 5px;
+	height: 450px;
+	padding-top: 0px;
+}
+
+#rowMap{
+	height: 450px;
+	.ion-col{
+		height: 450px;		
+	}
+}
+.labels{
+	border: none;
+}
+.dato{
+	border: none;
+}

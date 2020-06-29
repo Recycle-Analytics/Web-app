@@ -1,0 +1,41 @@
+<ion-app>
+	<ion-header [translucent]="false">
+	  <ion-toolbar color="success">
+	    <ion-buttons slot="start">
+	      <ion-menu-button auto-hide="false"></ion-menu-button>
+	    </ion-buttons>
+	    <ion-title>
+	      Recyclable Analytics
+	    </ion-title>
+	  </ion-toolbar>
+	</ion-header>
+	<ion-content [fullscreen]="true">
+	  <ion-split-pane when="sm" content-id="main-content">
+	    <ion-menu content-id="main-content">
+	      <ion-header>
+	        <ion-toolbar></ion-toolbar>
+	      </ion-header>
+	      <ion-content>
+	        <ion-list>
+	          <ion-list-header>
+	            Panel de Información
+	          </ion-list-header>
+	          <ion-menu-toggle auto-hide="false">
+	            <ion-item button *ngFor="let item of Menu" class="itemMenu" [routerLink]="item.url" routerDirection="forward">
+	              <ion-icon slot="start" [name]="item.icono" [src]="item.src"></ion-icon>
+	              <ion-label>
+	                {{ item.Nombre }}
+	              </ion-label>
+	            </ion-item>
+	          </ion-menu-toggle>
+	        </ion-list>
+	      </ion-content>
+	    </ion-menu>
+
+	    <div class="ion-page" id="main-content">
+	      <ion-router-outlet></ion-router-outlet>
+	    </div>
+
+	  </ion-split-pane>
+	</ion-content>
+</ion-app>

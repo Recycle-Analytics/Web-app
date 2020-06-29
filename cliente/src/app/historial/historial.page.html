@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Historial</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-button color="success" (click)='actualizarNuevos("Contenedores")'>Actualizar Contenedores</ion-button>
+  <ion-button color="success" (click)='actualizarNuevos("Vehiculos")'>Actualizar Vehiculos</ion-button>
+  <ion-list>
+    <ion-card *ngFor="let actualization of cardsActualizaciones;let indice=index">
+      <ion-card-header *ngIf="headersTipo[indice]=='Vehiculos'">
+        Actualizacion {{ actualization[0].actualizacion }} - Vehiculos
+      </ion-card-header>
+      <ion-card-header *ngIf="headersTipo[indice]=='Contenedores'">
+        Actualizacion {{ actualization[0].actualizacion }} - Contenedores
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list *ngIf="headersTipo[indice]=='Vehiculos'">
+          <ion-item *ngFor="let register of actualization">
+            <h3 class="actualizaciones">ID: {{ register.ID }}</h3>
+            <p class="actualizaciones">ID_objeto: {{ register.IdVehiculo }}</p>
+            <p  class="actualizaciones">Fecha y Hora: {{ register.Fecha }} {{ register.Hora }}</p>
+            <p  class="actualizaciones" >Peso: {{ register.Peso }}</p>
+            <p class="actualizaciones">Humedad: {{ register.Humedad }}</p>
+            <p class="actualizaciones">Temperatura: {{ register.Temperatura }}</p>
+            <p class="actualizaciones">Gas: {{ register.Gas }}</p>
+            <p class="actualizaciones">Fuego: {{ register.Fuego }}</p>
+          </ion-item>
+        </ion-list>
+        <ion-list *ngIf="headersTipo[indice]=='Contenedores'">
+          <ion-item *ngFor="let register of actualization">
+            <h3 class="actualizaciones">ID: {{ register.ID }}</h3>
+            <p class="actualizaciones">ID_objeto: {{ register.id_obj }}</p>
+            <p  class="actualizaciones">Fecha y Hora: {{ register.create_at }}</p>
+            <p  class="actualizaciones" >Peso: {{ register.PESO }}</p>
+            <p class="actualizaciones">Ubicacion: {{ register.ubicacion }}</p>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadOlder($event)" id="infiniteScroll">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

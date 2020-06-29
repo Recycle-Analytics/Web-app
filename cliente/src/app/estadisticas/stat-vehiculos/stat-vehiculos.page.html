@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar id="toolbar" color="secondarysuccess">
+  	<ion-buttons slot="start">
+  		<ion-button routerDirection="back" routerLink="/estadisticas" >
+  			<ion-icon name="arrow-back-outline"></ion-icon>
+  		</ion-button>
+  	</ion-buttons>
+    <ion-title>Vehiculos</ion-title>
+    <ion-buttons slot="end">
+  		<ion-button>
+  			<ion-icon slot="icon-only" name="bus-outline"></ion-icon>
+  		</ion-button>
+  	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<ion-card-header>
+		    Ultima Actualizacion - {{ ultimaActualizacion }}
+		</ion-card-header>
+		<ion-card-title id="titulo-cont">
+			Disponibilidad de Vehiculos
+		</ion-card-title>
+		
+		<ion-card-content>		
+			<div style="display: block"><canvas id="yudhatp-chart" (mouseover)="hideShow(1)"></canvas></div>
+		</ion-card-content>
+	</ion-card>
+	<ion-list>
+		<ion-item button class="estadistica" *ngFor="let info of IEGParcial; let indice=index" (mouseover)="hideShow(indice)">
+			<ion-label class="titulo">{{ info.titulo }}<br>
+				<p *ngIf="hoverOn[indice]" class="label">{{ info.label }}</p>
+			</ion-label>
+			<ion-note slot="end" class="dato"> {{ info.dato }} {{ info.unidad }}</ion-note>
+		</ion-item>
+	</ion-list>
+</ion-content>

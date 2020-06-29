@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Estadisticas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+    	<ion-row *ngFor="let seccion of Sections; let indice=index"   lines="none"  class="secciones" color="secondarysuccess">
+    		<ion-col button class="title-section" [routerLink]="seccion.url" routerDirection="forward" size="4">
+    			<p class="titulo">{{ seccion.titulo }}</p>
+    		</ion-col>
+    		<ion-col class="content-section" size="6">
+    			<p class="dato" >{{ seccion.dato }} </p>
+    			<p class="label" > {{ seccion.label }} </p>
+    		</ion-col>
+    		<ion-col class="button-icon" size="2">
+	    		<ion-button (click)="cambiarInfo(indice)" class="botones" fill="clear" size="large" shape="round">
+    				<ion-icon slot="icon-only" class="iconos" [name]="seccion.icono" [src]="seccion.src"></ion-icon>
+	    		</ion-button>
+    		</ion-col>
+    	</ion-row>
+    </ion-grid>
+</ion-content>

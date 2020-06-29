@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Contenedores</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-button expand="block" color="success" (click)='actualizarNuevos("Contenedores")'>Actualizar Contenedores</ion-button>
+	<ion-list>
+		<ion-list-header lines="full">
+			<ion-label id="label-list">Listado de Contenedores</ion-label>
+		</ion-list-header>		
+		<ion-item lines="inset">
+			<ion-grid class="grid-list">
+				<ion-row class="header-row">
+					<ion-col class="column-border" size="12">
+						No. Contenedor
+					</ion-col>
+					<ion-col class="column-border" size="10">
+						Peso
+					</ion-col>
+					<ion-col class="column-border" size="37">
+						Ultima Actualizacion
+					</ion-col>
+					<ion-col class="column-border" size="32">
+						Ubicacion
+					</ion-col>
+					<ion-col size="9">
+						<ion-button color="success" id="refresh-all" [disabled]="nuevosRegistros==0" (click)="verContenedoresActualizados(0,(registrosPendientes.length-1))">
+							<ion-icon name="refresh-outline"></ion-icon>
+							<p *ngIf="nuevosRegistros!=0">({{ nuevosRegistros }})<p>
+						</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>
+		<ion-item *ngFor="let contenedor of ultimosRegistrosContenedores; let indice=index">
+			<ion-grid class="grid-list">
+				<ion-row class="register-row">
+					<ion-col class="column-border" size="12">
+						{{ contenedor.id_obj }}
+					</ion-col>
+					<ion-col class="column-border" size="10">
+						{{ contenedor.PESO }}
+					</ion-col>
+					<ion-col class="column-border" size="37">
+						{{ contenedor.create_at }}
+					</ion-col>
+					<ion-col class="column-border" size="32">
+						{{ contenedor.ubicacion }}
+					</ion-col>
+					<ion-col size="9">
+						<ion-button color="success" [disabled]="!actualizacionDisponible[indice]" (click)="verContenedoresActualizados(indice,indice)"><ion-icon name="refresh-outline"></ion-icon></ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>
+	</ion-list>
+	<ion-infinite-scroll threshold="100px" (ionInfinite)="loadOlder($event)" id="infiniteScroll">
+	    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+	    </ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+</ion-content>

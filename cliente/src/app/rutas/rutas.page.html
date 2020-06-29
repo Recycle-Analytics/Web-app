@@ -1,0 +1,130 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Rutas</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-grid>
+		<ion-row>
+			<ion-col size="6">
+				<ion-button expand="block" color="success" (click)='creandoRuta=true; editando=true;' [disabled]="editando">Crear Ruta</ion-button>
+			</ion-col>
+			<ion-col size="6">
+				<ion-button expand="block" color="danger" (click)='eliminacion()' [disabled]="editando" *ngIf="!eliminando">Eliminar Ruta</ion-button>
+				<ion-button expand="block" color="danger" (click)='cancelarEliminacion()'  *ngIf="eliminando">Cancelar</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-list>
+		<ion-list-header lines="full">
+			<ion-label id="label-list">Listado de Rutas</ion-label>
+		</ion-list-header>
+		<!-- Header-->
+		<ion-item lines="inset">
+			<ion-grid class="grid-list">
+				<ion-row class="header-row">
+					<ion-col class="column-border" size="10">
+						Ruta
+					</ion-col>
+					<ion-col class="column-border" size="10">
+						Vehiculo
+					</ion-col>
+					<ion-col class="column-border" size="13">
+						Contenedores por Ruta
+					</ion-col>
+					<ion-col class="column-border" size="15">
+						Tiempo estimado <br>de Recorrido
+					</ion-col>
+					<ion-col class="column-border" size="31">
+						Progreso
+					</ion-col>
+					<ion-col class="column-border" size="10">
+						Operando
+					</ion-col>
+					<ion-col size="11">
+						Editar
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>
+		<!-- lista de formulario para rutas nuevas-->
+		<ion-item *ngIf="creandoRuta">
+			<ion-grid class="grid-list">
+				<form [formGroup]="rutaPrecreada" (ngSubmit)="crearRuta()">
+					<ion-row class="register-row">
+						<ion-col class="column-border" size="10">
+							<ion-input class="inputs" required type="text" formControlName="id_ruta"></ion-input>
+							<div *ngFor="let error of errorMessages.id_ruta">
+								<ng-container *ngIf="id_ruta.hasError(error.type) && (id_ruta.dirty || id_ruta.touched)">
+									<small class="error-mensaje" >{{ error.message }}</small>
+								</ng-container>
+							</div>
+						</ion-col>
+						<ion-col class="column-border" size="10">
+							<ion-input class="inputs" type="number" formControlName="IdVehiculo"></ion-input>
+						</ion-col>
+						<ion-col class="column-border" size="13">
+							<ion-input class="inputs" required type="text" formControlName="contenedores"></ion-input>
+							<div *ngFor="let error of errorMessages.contenedores">
+								<ng-container *ngIf="contenedores.hasError(error.type) && (contenedores.dirty || contenedores.touched)">
+									<small class="error-mensaje">{{ error.message }}</small>
+								</ng-container>
+							</div>
+						</ion-col>
+						<ion-col class="column-border" size="15">
+							--
+						</ion-col>
+						<ion-col class="column-border" size="31">
+							--
+						</ion-col>
+						<ion-col class="column-border" size="10">
+							--
+						</ion-col>
+						<ion-col size="11">
+							<ion-button color="success" type="submit" [disabled]="!rutaPrecreada.valid" ><ion-icon name="add-outline"></ion-icon></ion-button>
+							<ion-button color="danger" (click)="cancelarCreacion()"><ion-icon name="close-outline"></ion-icon></ion-button>
+						</ion-col>
+					</ion-row>
+				</form>
+			</ion-grid>
+		</ion-item>
+		<!-- lista de rutas conocidas-->
+		<ion-item *ngFor="let ruta of rutasActuales; let indice=index">
+			<ion-grid class="grid-list">
+				<form [formGroup]="rutaPremodificada" (ngSubmit)="actualizarRuta(indice)">
+					<ion-row class="register-row">
+						<ion-col class="column-border" size="10">
+							{{ ruta.id_ruta }}
+						</ion-col>
+						<ion-col class="column-border" size="10">
+							<p *ngIf="!rutasParaActualizar[indice]">{{ ruta.IdVehiculo }}</p>
+							<ion-input *ngIf="rutasParaActualizar[indice]" formControlName="IdVehiculo" class="inputs" type="number" [value]="ruta.IdVehiculo"></ion-input>
+						</ion-col>
+						<ion-col class="column-border" size="13">
+							{{ ruta.contenedores }}
+						</ion-col>
+						<ion-col class="column-border" size="15">
+							{{ ruta.tiempo_estimado }}
+						</ion-col>
+						<ion-col class="column-border" size="31">
+							{{ ruta.progreso }}
+						</ion-col>
+						<ion-col class="column-border" size="10">
+							{{ ruta.Encendido }}
+						</ion-col>
+						<ion-col size="11">
+							<ion-button *ngIf="!rutasParaActualizar[indice] && !eliminando" color="success" [disabled]="editando" (click)="editarRuta(indice)"><ion-icon name="pencil-outline"></ion-icon></ion-button>
+							<ion-button *ngIf="rutasParaActualizar[indice] && !eliminando" color="success" type="submit"><ion-icon name="arrow-up-outline"></ion-icon></ion-button>
+							<ion-button *ngIf="rutasParaActualizar[indice] && !eliminando" color="danger" (click)="cancelarEdicion(indice)"><ion-icon name="close-outline"></ion-icon></ion-button>
+							<ion-button *ngIf="eliminando" color="danger" (click)="eliminarRuta(indice)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+						</ion-col>
+					</ion-row>
+				</form>
+			</ion-grid>
+		</ion-item>
+	</ion-list>
+	<ion-infinite-scroll threshold="100px" (ionInfinite)="loadOlder($event)" id="infiniteScroll">
+	    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+	    </ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+</ion-content>

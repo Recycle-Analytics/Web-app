@@ -1,0 +1,70 @@
+/*.general{
+
+}
+.contenedores{
+
+}
+.vehiculos{
+
+}
+.rutas{
+
+}
+.zonas{
+
+}*/
+.title-section{
+	font-size: 40px;
+	.titulo{
+		align-item: center;
+	}
+}
+.title-section:hover{
+	background: #2dd36f;
+	color: #d1ffdb;
+}
+.title-section:focus{
+	outline: none;
+}
+.content-section{
+	text-align: right;
+	align-items: center;
+	//border-left: thin solid #2dd36f;
+	.dato{
+		font-size: 60px;
+		margin-bottom: 5px; 
+		margin-top: 5px; 
+	}
+	.label{
+		margin-top: 5px;
+		font-size: 20px;
+	}
+}
+.button-icon{
+	border-bottom-right-radius: 15px;
+	border-top-right-radius: 15px;
+	border-left: thin solid #2dd36f;
+	align-items: center;
+	background: #2dd36f; 
+}
+.button-icon:hover{
+	background: #b8e0c1; 
+}
+.secciones{
+	border-radius: 15px;
+	border: 1px solid #2dd36f;
+	border-left: 15px solid #2dd36f;
+	margin: 20px;
+	background: #d1ffdb;
+	color: #2dd36f;
+}
+.botones{
+	height: 100px;
+	color: #d1ffdb;
+	margin-top: 15px;
+	margin-left: 8px;
+}
+.iconos{
+	font-size: 80px;
+	--ionicon-stroke-width: 30px;
+}

@@ -1,0 +1,24 @@
+.grid-list{
+	--ion-grid-columns: 100;
+}
+.header-row{
+	font-size: small;
+	font-weight: bold;
+	align-items: center;
+}
+.register-row{
+	align-items: center;
+}
+#label-list{
+	color: #989aa2;
+	text-align: center;
+}
+#refresh-all{
+	--ion-color-success: #ffffff;
+	--ion-color-success-contrast: #3dc2ff;
+}
+.column-border{
+	border-right: thin solid #d9d9d9;
+	//border-right-width: thin;
+	//border-right-color: #989aa2;
+}
