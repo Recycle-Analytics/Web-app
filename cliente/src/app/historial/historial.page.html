@@ -30,10 +30,10 @@
         <ion-list *ngIf="headersTipo[indice]=='Contenedores'">
           <ion-item *ngFor="let register of actualization">
             <h3 class="actualizaciones">ID: {{ register.ID }}</h3>
-            <p class="actualizaciones">ID_objeto: {{ register.id_obj }}</p>
-            <p  class="actualizaciones">Fecha y Hora: {{ register.create_at }}</p>
-            <p  class="actualizaciones" >Peso: {{ register.PESO }}</p>
-            <p class="actualizaciones">Ubicacion: {{ register.ubicacion }}</p>
+            <p class="actualizaciones">ID_objeto: {{ register.IdContenedor }}</p>
+            <p  class="actualizaciones">Fecha y Hora: {{ register.Fecha }}</p>
+            <p  class="actualizaciones" >Peso: {{ register.Peso }}</p>
+            <p class="actualizaciones">Ubicacion: {{ register.Direccion }}</p>
           </ion-item>
         </ion-list>
       </ion-card-content>

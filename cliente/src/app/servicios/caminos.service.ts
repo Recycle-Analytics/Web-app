@@ -32,7 +32,7 @@ export class CaminosService {
 
   	getProgresos(rutActualizables: any){
   		var respuesta = this.http.get(this.API_URI + 'progress/' + rutActualizables);
-  		console.log(respuesta);
+  		//console.log(respuesta);
   		return respuesta;
   	}
 

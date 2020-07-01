@@ -29,36 +29,36 @@ class AnalisisDatos {
             switch (stat) {
                 //General
                 case "Pc_T_Ocupado":
-                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT SUM(t.PESO)*100/(COUNT(t.id_obj)*?) FROM (SELECT id_obj, MAX(id) as ID FROM test GROUP BY id_obj) r INNER JOIN test t ON t.id_obj = r.id_obj AND t.id = r.ID),1) WHERE nombre=?;', [analisisDatos.capMaxCont, stat]);
+                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT SUM(t.Peso)*100/(COUNT(t.IdContenedor)*?) FROM (SELECT IdContenedor, MAX(id) as ID FROM contenedores GROUP BY IdContenedor) r INNER JOIN contenedores t ON t.IdContenedor = r.IdContenedor AND t.id = r.ID),1) WHERE nombre=?;', [analisisDatos.capMaxCont, stat]);
                     break;
                 case "Tn_T_Recogidas":
                     yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT SUM(Peso)/1000 FROM camiones WHERE descarga=1),1) WHERE nombre=?', [stat]);
                     break;
                 case "Ts_N_Recoleccion": // OJO, Dependencia de la propia tabla de estadisticas
-                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((((SELECT SUM(t.PESO)/1000 FROM (SELECT id_obj, MAX(id) as ID FROM test GROUP BY id_obj) r INNER JOIN test t ON t.id_obj = r.id_obj AND t.id = r.ID)-(SELECT dato FROM estadisticas WHERE nombre="Tn_T_Ocupadas"))/?),1) WHERE nombre=?', [analisisDatos.dTime, stat]);
+                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((((SELECT SUM(t.Peso)/1000 FROM (SELECT IdContenedor, MAX(id) as ID FROM contenedores GROUP BY IdContenedor) r INNER JOIN contenedores t ON t.IdContenedor = r.IdContenedor AND t.id = r.ID)-(SELECT dato FROM estadisticas WHERE nombre="Tn_T_Ocupadas"))/?),1) WHERE nombre=?', [analisisDatos.dTime, stat]);
                     break;
                 case "Tn_T_Moviendose":
                     yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT SUM(t.Peso)/1000  FROM (SELECT IdVehiculo, MAX(id) as ID FROM camiones GROUP BY IdVehiculo) r INNER JOIN camiones t ON t.IdVehiculo = r.IdVehiculo AND t.id = r.ID WHERE t.Encendido=1),1) WHERE nombre=?', [stat]);
                     break;
                 case "Ds_Contenedores":
-                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND(((SELECT COUNT(DISTINCT(id_obj)) FROM test)/?),1) WHERE nombre=?', [analisisDatos.m2Ciudad, stat]);
+                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND(((SELECT COUNT(DISTINCT(IdContenedor)) FROM contenedores)/?),1) WHERE nombre=?', [analisisDatos.m2Ciudad, stat]);
                     break;
                 case "Tn_T_Ocupadas":
-                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT SUM(t.PESO)/1000 FROM (SELECT id_obj, MAX(id) as ID FROM test GROUP BY id_obj) r INNER JOIN test t ON t.id_obj = r.id_obj AND t.id = r.ID),1) WHERE nombre=?', [stat]);
+                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT SUM(t.Peso)/1000 FROM (SELECT IdContenedor, MAX(id) as ID FROM contenedores GROUP BY IdContenedor) r INNER JOIN contenedores t ON t.IdContenedor = r.IdContenedor AND t.id = r.ID),1) WHERE nombre=?', [stat]);
                     break;
                 //Contenedores
                 case "Cnt_T_Funcionando":
-                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT COUNT(DISTINCT(id_obj)) FROM test),1) WHERE nombre=?', [stat]);
+                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT COUNT(DISTINCT(IdContenedor)) FROM contenedores),1) WHERE nombre=?', [stat]);
                     break;
                 case "Pc_Cnt_Llenos":
-                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND(((SELECT COUNT(t.id_obj) FROM (SELECT id_obj, MAX(id) as ID FROM test GROUP BY id_obj) r INNER JOIN test t ON t.id_obj = r.id_obj AND t.id = r.ID WHERE t.PESO>?)*100/(SELECT COUNT(DISTINCT(id_obj)) FROM test)),1) WHERE nombre=?', [analisisDatos.margFullCont, stat]);
+                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND(((SELECT COUNT(t.IdContenedor) FROM (SELECT IdContenedor, MAX(id) as ID FROM contenedores GROUP BY IdContenedor) r INNER JOIN contenedores t ON t.IdContenedor = r.IdContenedor AND t.id = r.ID WHERE t.Peso>?)*100/(SELECT COUNT(DISTINCT(IdContenedor)) FROM contenedores)),1) WHERE nombre=?', [analisisDatos.margFullCont, stat]);
                     break;
                 //Vehiculos
                 case "Vh_T_Disponibles":
                     yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT COUNT(DISTINCT(IdVehiculo)) FROM camiones),1) WHERE nombre=?', [stat]);
                     break;
                 case "Vh_T_Operando":
-                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT COUNT(DISTINCT(IdVehiculo)) FROM camiones WHERE Encendido=1),1) WHERE nombre=?', [stat]);
+                    yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((SELECT SUM(t.Peso)/1000  FROM (SELECT IdVehiculo, MAX(id) as ID FROM camiones GROUP BY IdVehiculo) r INNER JOIN camiones t ON t.IdVehiculo = r.IdVehiculo AND t.id = r.ID WHERE t.Encendido=1),1) WHERE nombre=?', [stat]);
                     break;
                 //Rutas
                 case "Rt_T_Establecidas":
@@ -75,7 +75,7 @@ class AnalisisDatos {
                     yield database_1.default.query('UPDATE estadisticas SET dato=ROUND((?),1) WHERE nombre=?', [analisisDatos.locCub, stat]);
                     break;
             }
-            //const respuesta = await pool.query('SELECT PESO FROM test');
+            //const respuesta = await pool.query('SELECT Peso FROM contenedores');
             //console.log(respuesta);
             //return respuesta;
         });

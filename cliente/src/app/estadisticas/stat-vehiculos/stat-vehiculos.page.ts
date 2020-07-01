@@ -21,7 +21,7 @@ export class StatVehiculosPage implements OnInit {
   	this.getStatVeh(true, 0);
 
   	this.iteracion[0] = setInterval(()=>{this.getStatVeh(false, 1)},10000); //100000
-  	this.iteracion[1] = setInterval(()=>{this.getStatVeh(false, 2)},60000);
+  	this.iteracion[1] = setInterval(()=>{this.getStatVeh(false, 2)},2000);
   }
 
   getStatVeh(inicio: boolean, id: number){

@@ -61,8 +61,9 @@ class RutasControlador {
     getProgress(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             var { rutasAct } = req.params;
-            var progresos = yield database_1.default.query('SELECT progreso FROM rutas ORDER BY id desc LIMIT ?;', [rutasAct]);
-            var rutasDeRespuesta = progresos[0];
+            var progresos = yield database_1.default.query('SELECT progreso, Encendido FROM rutas ORDER BY id desc');
+            var rutasDeRespuesta = progresos[0].slice(0, Number(rutasAct));
+            console.log(rutasDeRespuesta);
             return res.json(rutasDeRespuesta);
         });
     }

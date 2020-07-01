@@ -9,7 +9,7 @@ class MapasControlador{
 		var infoUtil: any;
 		switch (tipo) {
 			case "contenedores":
-				var respuesta = await pool.query('SELECT DISTINCT id_obj AS IdEntidad FROM test ORDER BY id_obj asc;');
+				var respuesta = await pool.query('SELECT DISTINCT IdContenedor AS IdEntidad FROM contenedores ORDER BY IdContenedor asc;');
 				infoUtil = respuesta[0];
 				break;
 			
@@ -34,7 +34,7 @@ class MapasControlador{
 		var infoUtil: any;
 		switch (tipo) {
 			case "contenedores":
-				var respuesta = await pool.query('SELECT * FROM test WHERE id_obj=? ORDER BY IdContenedor desc LIMIT 1;', [Number(id)]);
+				var respuesta = await pool.query('SELECT * FROM contenedores WHERE IdContenedor=? ORDER BY IdContenedor desc LIMIT 1;', [Number(id)]);
 				infoUtil = respuesta[0];
 				break;
 			

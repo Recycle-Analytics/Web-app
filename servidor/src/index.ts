@@ -48,16 +48,16 @@ class Servidor {
 
 	setAnalisis(): void{
 		listaDatosEstadisticos.crearTablaEstadistica(listaDatosEstadisticos.lista).then(result=>{console.log("acabo")});
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Pc_T_Ocupado")}, 2000);
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Tn_T_Recogidas")}, 20000);			
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Ts_N_Recoleccion");
+		setInterval(() => {analisisDatos.actualizarEstadistica("Pc_T_Ocupado")}, 2000);
+		setInterval(() => {analisisDatos.actualizarEstadistica("Tn_T_Recogidas")}, 20000);			
+		setInterval(() => {analisisDatos.actualizarEstadistica("Ts_N_Recoleccion");
 						  analisisDatos.actualizarEstadistica("Tn_T_Ocupadas");}, 2000);
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Tn_T_Moviendose")}, 2000);
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Ds_Contenedores")}, 10000); //1000000
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Cnt_T_Funcionando")}, 10000); //1000000
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Pc_Cnt_Llenos")}, 2000);
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Vh_T_Disponibles")}, 10000);//1000000
-		setTimeout(() => {analisisDatos.actualizarEstadistica("Vh_T_Operando")}, 60000);
+		setInterval(() => {analisisDatos.actualizarEstadistica("Tn_T_Moviendose")}, 2000);
+		setInterval(() => {analisisDatos.actualizarEstadistica("Ds_Contenedores")}, 10000); //1000000
+		setInterval(() => {analisisDatos.actualizarEstadistica("Cnt_T_Funcionando")}, 10000); //1000000
+		setInterval(() => {analisisDatos.actualizarEstadistica("Pc_Cnt_Llenos")}, 2000);
+		setInterval(() => {analisisDatos.actualizarEstadistica("Vh_T_Disponibles")}, 10000);//1000000
+		setInterval(() => {analisisDatos.actualizarEstadistica("Vh_T_Operando")}, 2000);
 		analisisDatos.actualizarEstadistica("Rt_T_Establecidas"); //"Rt_T_Establecidas" se actualiza con los Controladores de rutas
 		analisisDatos.actualizarEstadistica("Pm_Cnt_Ruta"); //"Pm_Cnt_Ruta" se actualiza con los Controladores de rutas
 		analisisDatos.actualizarEstadistica("Br_T_Cubiertos"); //"Br_T_Cubiertos" Se actualiza con los Controladores de estadisticas

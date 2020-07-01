@@ -43,18 +43,18 @@ class Servidor {
     }
     setAnalisis() {
         listaDatosEstadisticos_1.default.crearTablaEstadistica(listaDatosEstadisticos_1.default.lista).then(result => { console.log("acabo"); });
-        setTimeout(() => { analisis_datos_1.default.actualizarEstadistica("Pc_T_Ocupado"); }, 2000);
-        setTimeout(() => { analisis_datos_1.default.actualizarEstadistica("Tn_T_Recogidas"); }, 20000);
-        setTimeout(() => {
+        setInterval(() => { analisis_datos_1.default.actualizarEstadistica("Pc_T_Ocupado"); }, 2000);
+        setInterval(() => { analisis_datos_1.default.actualizarEstadistica("Tn_T_Recogidas"); }, 20000);
+        setInterval(() => {
             analisis_datos_1.default.actualizarEstadistica("Ts_N_Recoleccion");
             analisis_datos_1.default.actualizarEstadistica("Tn_T_Ocupadas");
         }, 2000);
-        setTimeout(() => { analisis_datos_1.default.actualizarEstadistica("Tn_T_Moviendose"); }, 2000);
-        setTimeout(() => { analisis_datos_1.default.actualizarEstadistica("Ds_Contenedores"); }, 10000); //1000000
-        setTimeout(() => { analisis_datos_1.default.actualizarEstadistica("Cnt_T_Funcionando"); }, 10000); //1000000
-        setTimeout(() => { analisis_datos_1.default.actualizarEstadistica("Pc_Cnt_Llenos"); }, 2000);
-        setTimeout(() => { analisis_datos_1.default.actualizarEstadistica("Vh_T_Disponibles"); }, 10000); //1000000
-        setTimeout(() => { analisis_datos_1.default.actualizarEstadistica("Vh_T_Operando"); }, 60000);
+        setInterval(() => { analisis_datos_1.default.actualizarEstadistica("Tn_T_Moviendose"); }, 2000);
+        setInterval(() => { analisis_datos_1.default.actualizarEstadistica("Ds_Contenedores"); }, 10000); //1000000
+        setInterval(() => { analisis_datos_1.default.actualizarEstadistica("Cnt_T_Funcionando"); }, 10000); //1000000
+        setInterval(() => { analisis_datos_1.default.actualizarEstadistica("Pc_Cnt_Llenos"); }, 2000);
+        setInterval(() => { analisis_datos_1.default.actualizarEstadistica("Vh_T_Disponibles"); }, 10000); //1000000
+        setInterval(() => { analisis_datos_1.default.actualizarEstadistica("Vh_T_Operando"); }, 2000);
         analisis_datos_1.default.actualizarEstadistica("Rt_T_Establecidas"); //"Rt_T_Establecidas" se actualiza con los Controladores de rutas
         analisis_datos_1.default.actualizarEstadistica("Pm_Cnt_Ruta"); //"Pm_Cnt_Ruta" se actualiza con los Controladores de rutas
         analisis_datos_1.default.actualizarEstadistica("Br_T_Cubiertos"); //"Br_T_Cubiertos" Se actualiza con los Controladores de estadisticas

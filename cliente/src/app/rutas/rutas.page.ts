@@ -33,6 +33,9 @@ export class RutasPage implements OnInit {
 	});
 	eliminando: boolean = false;
 	rutasEliminadas: any = 0;
+
+	actProgresos: any;
+
 	constructor(private caminosService: CaminosService, private formBuilder: FormBuilder) { 
 		this.leerRutasRegistradas(this.numeroScroll, this.rutasPorScroll, this.rutasAnadidas, this.rutasEliminadas);
 	}
@@ -46,6 +49,7 @@ export class RutasPage implements OnInit {
 			}, 
 			err => {console.log(err)}
 		);
+		this.actProgresos = setInterval(()=>{this.actualizarProgreso(this.rutasActuales.length)}, 3000);
 	}
 	//----------------------Metodo para leer Rutas Establecidas-----------------
 	leerRutasRegistradas(numScroll: any, rutasByScroll: any, rutasAdded: any, rutasSuprimed: any){
@@ -123,7 +127,9 @@ export class RutasPage implements OnInit {
 			res => {
 				progresos = res;
 				for(var i=0; i<progresos.length; i++){
+					console.log("nuevo Progreso");
 					this.rutasActuales[i].progreso = progresos[i].progreso;
+					this.rutasActuales[i].Encendido = progresos[i].Encendido;
 				}
 			},
 			err => {console.log(err)}
@@ -206,5 +212,14 @@ export class RutasPage implements OnInit {
 	            this.infiniteScroll.disabled = true;
         	}
 		},500);
+	}
+
+	//----------------------------------------------------
+	ionViewWillLeave(){
+		clearInterval(this.actProgresos);
+	}
+
+	ngOnDestroy(){
+		clearInterval(this.actProgresos);
 	}
 }

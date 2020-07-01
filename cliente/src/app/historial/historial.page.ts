@@ -10,7 +10,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 export class HistorialPage implements OnInit {
   @ViewChild(IonInfiniteScroll, {static:false}) infiniteScroll: IonInfiniteScroll;
 
-	cardsActualizaciones: Array<any> = new Array();
+	cardsActualizaciones: Array<any> = [];
   headersTipo: Array<any> = new Array();
   actualizacionesByScroll: any = 5;
   numeroDeActualizacion: any = 1;

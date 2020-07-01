@@ -45,8 +45,9 @@ class RutasControlador{
 
 	public async getProgress(req: Request, res: Response): Promise <any>{
 		var { rutasAct } = req.params;
-		var progresos = await pool.query('SELECT progreso FROM rutas ORDER BY id desc LIMIT ?;', [rutasAct]);
-		var rutasDeRespuesta = progresos[0];
+		var progresos = await pool.query('SELECT progreso, Encendido FROM rutas ORDER BY id desc');
+		var rutasDeRespuesta = progresos[0].slice(0, Number(rutasAct));
+		console.log(rutasDeRespuesta);
 		return res.json(rutasDeRespuesta);
 	}
 	public async updateRuta(req: Request, res: Response): Promise <void>{

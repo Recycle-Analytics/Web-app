@@ -5,17 +5,17 @@ import pool from '../database';
 class ContenedoresControlador{
 
 	public async leerContenedores ( req: Request, res: Response): Promise<void>{
-		const respuesta = await pool.query('SELECT DISTINCT id_obj AS IdBasura, max(ID) ID FROM test WHERE actualizacion IS NOT NULL GROUP BY id_obj ORDER BY id_obj asc;');
+		const respuesta = await pool.query('SELECT DISTINCT IdContenedor AS IdBasura, max(ID) ID FROM contenedores WHERE actualizacion IS NOT NULL GROUP BY IdContenedor ORDER BY IdContenedor asc;');
 		var basurasJson = respuesta[0];
 		var basuras: any = [];
 		var ids: any = [];
 		var idsContenedores: any = [];
 		for(var i=0; i<basurasJson.length; i++){
 			basuras[i] = {
-				id_obj:basurasJson[i].IdBasura,
-				PESO:"--",
-				create_at:"--",
-				ubicacion:"--",
+				IdContenedor:basurasJson[i].IdBasura,
+				Peso:"--",
+				Fecha:"--",
+				Direccion:"--",
 			};
 			ids[i] = basurasJson[i].ID;
 			idsContenedores[i] = basurasJson[i].IdBasura
@@ -28,7 +28,7 @@ class ContenedoresControlador{
 
 	public async leerUltimosRegistros( req: Request, res: Response): Promise <void>{
 		const { regInicial, regFinal } = req.params;
-		const respuesta = await pool.query('SELECT t.id_obj, t.PESO, t.create_at, t.ubicacion  FROM (SELECT id_obj, MAX(id) as ID FROM test GROUP BY id_obj) r INNER JOIN test t ON t.id_obj = r.id_obj AND t.id = r.ID WHERE t.actualizacion IS NOT NULL AND t.id_obj>=? AND t.id_obj<=? ORDER BY t.id_obj;',[regInicial, regFinal]);
+		const respuesta = await pool.query('SELECT t.IdContenedor, t.Peso, t.Fecha, t.Direccion  FROM (SELECT IdContenedor, MAX(id) as ID FROM contenedores GROUP BY IdContenedor) r INNER JOIN contenedores t ON t.IdContenedor = r.IdContenedor AND t.id = r.ID WHERE t.actualizacion IS NOT NULL AND t.IdContenedor>=? AND t.IdContenedor<=? ORDER BY t.IdContenedor;',[regInicial, regFinal]);
 		console.log(respuesta);
 		res.json(respuesta[0]);
 	}

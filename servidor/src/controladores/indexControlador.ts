@@ -15,8 +15,8 @@ class IndexControlador{
 		var oldRecolectores: any = [];
 		var tipos: any = [];
 		for(var i=0; i<parseInt(actByScroll); i++){
-			var oldRecolectorVehiculo = await pool.query('SELECT * FROM camiones WHERE actualizacion=(GREATEST(IF((SELECT max(actualizacion) FROM test) IS NULL,0,(SELECT max(actualizacion) FROM test)),IF((SELECT max(actualizacion) FROM camiones) IS NULL,0,(SELECT max(actualizacion) FROM camiones)))-?-?*(?-1)-?) ORDER BY ID desc;',[ i, actByScroll, numScroll, actRequested]);
-			var oldRecolectorContenedor = await pool.query('SELECT * FROM test WHERE actualizacion=(GREATEST(IF((SELECT max(actualizacion) FROM test) IS NULL,0,(SELECT max(actualizacion) FROM test)),IF((SELECT max(actualizacion) FROM camiones) IS NULL,0,(SELECT max(actualizacion) FROM camiones)))-?-?*(?-1)-?) ORDER BY ID desc;',[ i, actByScroll, numScroll, actRequested]);
+			var oldRecolectorVehiculo = await pool.query('SELECT * FROM camiones WHERE actualizacion=(GREATEST(IF((SELECT max(actualizacion) FROM contenedores) IS NULL,0,(SELECT max(actualizacion) FROM contenedores)),IF((SELECT max(actualizacion) FROM camiones) IS NULL,0,(SELECT max(actualizacion) FROM camiones)))-?-?*(?-1)-?) ORDER BY ID desc;',[ i, actByScroll, numScroll, actRequested]);
+			var oldRecolectorContenedor = await pool.query('SELECT * FROM contenedores WHERE actualizacion=(GREATEST(IF((SELECT max(actualizacion) FROM contenedores) IS NULL,0,(SELECT max(actualizacion) FROM contenedores)),IF((SELECT max(actualizacion) FROM camiones) IS NULL,0,(SELECT max(actualizacion) FROM camiones)))-?-?*(?-1)-?) ORDER BY ID desc;',[ i, actByScroll, numScroll, actRequested]);
 			oldRecolectores = oldRecolectores.concat(oldRecolectorVehiculo[0], oldRecolectorContenedor[0]);
 			if((oldRecolectorVehiculo[0].length>0) && (oldRecolectorContenedor[0].length==0)){
 				tipos.push('Vehiculos');
@@ -38,7 +38,7 @@ class IndexControlador{
 		//optimizar codigo cuando exista la tabla basuras
 		const { type } = req.params;
 		if(type=="Contenedores"){
-			const newRecolectorContenedor = await pool.query('SELECT * FROM test WHERE actualizacion=(SELECT max(actualizacion) FROM test) ORDER BY create_at desc;');
+			const newRecolectorContenedor = await pool.query('SELECT * FROM contenedores WHERE actualizacion=(SELECT max(actualizacion) FROM contenedores) ORDER BY Fecha desc;');
 			return res.json(newRecolectorContenedor[0]);
 		}else if(type=="Vehiculos"){
 			const newRecolectorVehiculo = await pool.query('SELECT * FROM camiones WHERE actualizacion=(SELECT max(actualizacion) FROM camiones) ORDER BY ID desc;'); //
@@ -54,10 +54,10 @@ class IndexControlador{
 		//optimizar codigo cuando exista la tabla basuras-
 		const { type } = req.params;
 		if(type=="Contenedores"){
-			await pool.query('UPDATE test set actualizacion=(IF((SELECT actualizacion from camiones where id=(SELECT min(id) FROM camiones)) IS NULL AND (SELECT actualizacion from test where id=(SELECT min(id) FROM test)) IS NULL,1,IF((SELECT actualizacion from test where id=(SELECT min(id) FROM test)) IS NULL,((SELECT max(actualizacion) from camiones)+1),IF((SELECT actualizacion from camiones where id=(SELECT min(id) FROM camiones)) IS NULL,((SELECT max(actualizacion) from test)+1),(GREATEST((SELECT max(actualizacion) from test),(SELECT max(actualizacion) from camiones))+1))))) WHERE actualizacion IS NULL');
+			await pool.query('UPDATE contenedores set actualizacion=(IF((SELECT actualizacion from camiones where id=(SELECT min(id) FROM camiones)) IS NULL AND (SELECT actualizacion from contenedores where id=(SELECT min(id) FROM contenedores)) IS NULL,1,IF((SELECT actualizacion from contenedores where id=(SELECT min(id) FROM contenedores)) IS NULL,((SELECT max(actualizacion) from camiones)+1),IF((SELECT actualizacion from camiones where id=(SELECT min(id) FROM camiones)) IS NULL,((SELECT max(actualizacion) from contenedores)+1),(GREATEST((SELECT max(actualizacion) from contenedores),(SELECT max(actualizacion) from camiones))+1))))) WHERE actualizacion IS NULL');
 			res.json({message: "Registro Actualizado"});
 		}else if(type=="Vehiculos"){
-			await pool.query('UPDATE camiones set actualizacion=(IF((SELECT actualizacion from camiones where id=(SELECT min(id) FROM camiones)) IS NULL AND (SELECT actualizacion from test where id=(SELECT min(id) FROM test)) IS NULL,1,IF((SELECT actualizacion from test where id=(SELECT min(id) FROM test)) IS NULL,((SELECT max(actualizacion) from camiones)+1),IF((SELECT actualizacion from camiones where id=(SELECT min(id) FROM camiones)) IS NULL,((SELECT max(actualizacion) from test)+1),(GREATEST((SELECT max(actualizacion) from test),(SELECT max(actualizacion) from camiones))+1))))) WHERE actualizacion IS NULL');
+			await pool.query('UPDATE camiones set actualizacion=(IF((SELECT actualizacion from camiones where id=(SELECT min(id) FROM camiones)) IS NULL AND (SELECT actualizacion from contenedores where id=(SELECT min(id) FROM contenedores)) IS NULL,1,IF((SELECT actualizacion from contenedores where id=(SELECT min(id) FROM contenedores)) IS NULL,((SELECT max(actualizacion) from camiones)+1),IF((SELECT actualizacion from camiones where id=(SELECT min(id) FROM camiones)) IS NULL,((SELECT max(actualizacion) from contenedores)+1),(GREATEST((SELECT max(actualizacion) from contenedores),(SELECT max(actualizacion) from camiones))+1))))) WHERE actualizacion IS NULL');
 			res.json({message: "Registro Actualizado"});
 		}else{
 			console.log("No se reconoce el tipo de objeto")

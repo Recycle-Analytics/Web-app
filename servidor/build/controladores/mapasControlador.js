@@ -21,7 +21,7 @@ class MapasControlador {
             var infoUtil;
             switch (tipo) {
                 case "contenedores":
-                    var respuesta = yield database_1.default.query('SELECT DISTINCT id_obj AS IdEntidad FROM test ORDER BY id_obj asc;');
+                    var respuesta = yield database_1.default.query('SELECT DISTINCT IdContenedor AS IdEntidad FROM contenedores ORDER BY IdContenedor asc;');
                     infoUtil = respuesta[0];
                     break;
                 case "vehiculos":
@@ -45,7 +45,7 @@ class MapasControlador {
             var infoUtil;
             switch (tipo) {
                 case "contenedores":
-                    var respuesta = yield database_1.default.query('SELECT * FROM test WHERE id_obj=? ORDER BY IdContenedor desc LIMIT 1;', [Number(id)]);
+                    var respuesta = yield database_1.default.query('SELECT * FROM contenedores WHERE IdContenedor=? ORDER BY IdContenedor desc LIMIT 1;', [Number(id)]);
                     infoUtil = respuesta[0];
                     break;
                 case "vehiculos":
